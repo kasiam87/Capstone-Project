@@ -24,4 +24,7 @@ public class ViewModel extends AndroidViewModel {
         favorites = productsDB.productDao().getFavorites();
     }
 
+    public LiveData<List<Product>> getFavorites() {
+        return favorites;
+    }
 }
