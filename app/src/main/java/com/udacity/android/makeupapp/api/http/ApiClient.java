@@ -29,7 +29,7 @@ public class ApiClient {
 
     private Retrofit getRetrofitClient(String uri) {
         Gson gson = new GsonBuilder()
-                .setLenient()
+                .setLenient() //todo remove
                 .create();
 
         return new Retrofit.Builder()
