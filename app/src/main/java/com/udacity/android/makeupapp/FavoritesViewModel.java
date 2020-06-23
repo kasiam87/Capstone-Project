@@ -13,11 +13,11 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class ViewModel extends AndroidViewModel {
+public class FavoritesViewModel extends AndroidViewModel {
 
     private LiveData<List<Product>> favorites;
 
-    public ViewModel(@NonNull Application application) {
+    public FavoritesViewModel(@NonNull Application application) {
         super(application);
         Timber.d("Getting favorite products from DB");
         ProductsDB productsDB = ProductsDB.getInstance(this.getApplication());
