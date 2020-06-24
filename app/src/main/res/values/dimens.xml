@@ -3,4 +3,5 @@
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="error_msg_text_size">20sp</dimen>
     <dimen name="loading_size">45dp</dimen>
+    <dimen name="home_image_margin">16dp</dimen>
 </resources>
