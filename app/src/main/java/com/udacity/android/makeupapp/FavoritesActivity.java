@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.udacity.android.makeupapp.databinding.ActivityFavoritesBinding;
@@ -24,7 +25,9 @@ public class FavoritesActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         showFavorites();
     }
 
@@ -39,5 +42,16 @@ public class FavoritesActivity extends AppCompatActivity {
                 b.noFavoritesErrorMsg.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
