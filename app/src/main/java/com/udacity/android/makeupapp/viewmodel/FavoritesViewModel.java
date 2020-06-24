@@ -1,4 +1,4 @@
-package com.udacity.android.makeupapp;
+package com.udacity.android.makeupapp.viewmodel;
 
 import android.app.Application;
 

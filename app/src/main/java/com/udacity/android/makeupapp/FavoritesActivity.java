@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.udacity.android.makeupapp.databinding.ActivityFavoritesBinding;
+import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
 import timber.log.Timber;
 
