@@ -7,14 +7,12 @@
     tools:context=".MainActivity">
 
     <SearchView
-        android:id="@+id/simpleSearchView"
+        android:id="@+id/search_box"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_margin="16dp"
         android:background="@drawable/search_view_background"
-        android:iconifiedByDefault="false"
         android:queryBackground="@android:color/transparent"
-        android:queryHint="@string/search_hint"
         app:layout_constraintBottom_toTopOf="@id/home_image1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +30,7 @@
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simpleSearchView"
+        app:layout_constraintTop_toBottomOf="@+id/search_box"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.60" />
 
@@ -48,7 +46,7 @@
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.3"
         app:layout_constraintStart_toEndOf="@+id/home_image1"
-        app:layout_constraintTop_toBottomOf="@+id/simpleSearchView"
+        app:layout_constraintTop_toBottomOf="@+id/search_box"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.35" />
 

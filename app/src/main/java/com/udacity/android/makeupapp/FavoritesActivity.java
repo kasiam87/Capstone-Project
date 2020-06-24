@@ -22,7 +22,7 @@ public class FavoritesActivity extends AppCompatActivity {
         b = ActivityFavoritesBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         showFavorites();
