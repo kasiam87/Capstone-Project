@@ -2,6 +2,7 @@ package com.udacity.android.makeupapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,14 +10,20 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.udacity.android.makeupapp.adapter.FavoriteProductsAdapter;
+import com.udacity.android.makeupapp.adapter.FavoriteProductsAdapterOnClickHandler;
+import com.udacity.android.makeupapp.api.model.Product;
 import com.udacity.android.makeupapp.databinding.ActivityFavoritesBinding;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
 import timber.log.Timber;
 
-public class FavoritesActivity extends AppCompatActivity {
+public class FavoritesActivity extends AppCompatActivity implements FavoriteProductsAdapterOnClickHandler {
 
     ActivityFavoritesBinding b;
+
+    private FavoriteProductsAdapter favoriteProductsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,18 @@ public class FavoritesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        b.favoritesRecyclerView.setLayoutManager(layoutManager);
+        b.favoritesRecyclerView.setHasFixedSize(true);
+        favoriteProductsAdapter = new FavoriteProductsAdapter(this);
+
+        if (savedInstanceState == null) {
+            showFavorites();
+        } else {
+            showFavorites();
+//                restoreFavorites(savedInstanceState);
+        }
+        b.favoritesRecyclerView.setAdapter(favoriteProductsAdapter);
         showFavorites();
     }
 
@@ -38,8 +57,10 @@ public class FavoritesActivity extends AppCompatActivity {
         viewModel.getFavorites().observe(this, favorites -> {
             Timber.d("Receiving database update from ViewModel");
             // show favorites or error
+            favoriteProductsAdapter.setFavoriteProducts(favorites);
             if (favorites != null && !favorites.isEmpty()) {
-                //todo
+                b.favoritesRecyclerView.setVisibility(View.VISIBLE);
+                b.noFavoritesErrorMsg.setVisibility(View.INVISIBLE);
             } else {
                 b.noFavoritesErrorMsg.setVisibility(View.VISIBLE);
             }
@@ -63,5 +84,12 @@ public class FavoritesActivity extends AppCompatActivity {
         returnIntent.putExtra(SearchResultsActivity.HAS_BACK_PRESSED, true);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
+    }
+
+    @Override
+    public void onClick(Product product) {
+        Intent intent = new Intent(this, DetailsScreen.class);
+        intent.putExtra(SearchResultsActivity.PRODUCT_DETAILS_JSON, new Gson().toJson(product));
+        startActivityForResult(intent, 1);
     }
 }

@@ -27,7 +27,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         Context context = viewGroup.getContext();
 
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.search_resul_grid_item, viewGroup, false);
+                .inflate(R.layout.search_results_grid_item, viewGroup, false);
         return new SearchResultViewHolder(view);
     }
 
