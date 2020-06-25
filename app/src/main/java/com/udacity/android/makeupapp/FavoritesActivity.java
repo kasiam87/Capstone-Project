@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.udacity.android.makeupapp.adapter.FavoriteProductsAdapter;
 import com.udacity.android.makeupapp.adapter.FavoriteProductsAdapterOnClickHandler;
 import com.udacity.android.makeupapp.api.model.Product;
+import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.databinding.ActivityFavoritesBinding;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 

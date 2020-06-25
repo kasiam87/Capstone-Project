@@ -5,5 +5,7 @@
     <string name="no_connection_error_msg">No results found.\nPlease check your internet connection.</string>
     <string name="search_hint">Search for products</string>
     <string name="home_screen_image">home screen image</string>
+    <string name="product_image">product image</string>
+    <string name="add_to_favorite_button">Add to favorites button</string>
 
 </resources>

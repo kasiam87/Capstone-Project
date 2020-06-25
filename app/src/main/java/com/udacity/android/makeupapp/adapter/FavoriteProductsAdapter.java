@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.android.makeupapp.R;
 import com.udacity.android.makeupapp.api.model.Product;
 
@@ -35,7 +37,17 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
     public void onBindViewHolder(@NonNull FavoriteProductsViewHolder viewHolder, int position) {
         Product product = products.get(position);
         Timber.d("Set text to " + product.brand);
-        viewHolder.productCard.setText(product.brand);
+        viewHolder.brand.setText(product.brand);
+        viewHolder.name.setText(product.name);
+        viewHolder.price.setText(product.price);
+        loadImage(product.imageLink, viewHolder.image);
+    }
+
+    public static void loadImage(String pathToImage, ImageView image) {
+        Picasso.get()
+                .load(pathToImage)
+//                .error(R.drawable.placeholder_error)
+                .into(image);
     }
 
     @Override
@@ -45,11 +57,17 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
 
     class FavoriteProductsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView productCard;
+        ImageView image;
+        TextView brand;
+        TextView name;
+        TextView price;
 
         FavoriteProductsViewHolder(View view){
             super(view);
-            productCard = view.findViewById(R.id.favorite_product);
+            brand = view.findViewById(R.id.favorite_product_brand);
+            name = view.findViewById(R.id.favorite_product_name);
+            price = view.findViewById(R.id.favorite_product_price);
+            image = view.findViewById(R.id.favorite_product_image);
             view.setOnClickListener(this);
         }
 

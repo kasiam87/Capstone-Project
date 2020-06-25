@@ -22,6 +22,7 @@ import com.udacity.android.makeupapp.adapter.SearchResultsAdapter;
 import com.udacity.android.makeupapp.adapter.SearchResultsAdapterOnClickHandler;
 import com.udacity.android.makeupapp.api.http.ApiClient;
 import com.udacity.android.makeupapp.api.model.Product;
+import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.databinding.ActivitySearchResultsBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -142,6 +143,8 @@ public class SearchResultsActivity extends AppCompatActivity
         if (products != null && !products.isEmpty()) {
             Timber.d("Show products");
             searchResultsAdapter.setSearchResults(products);
+            ProductsDB favoritesDB = ProductsDB.getInstance(this);
+            searchResultsAdapter.setDB(favoritesDB);
             b.searchResultsRecyclerView.setVisibility(View.VISIBLE);
             b.noConnectionErrorMsg.setVisibility(View.GONE);
         } else {
