@@ -2,6 +2,8 @@ package com.udacity.android.makeupapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,6 +12,7 @@ import com.udacity.android.makeupapp.databinding.ActivityDetailsScreenBinding;
 public class DetailsScreen extends AppCompatActivity {
 
     ActivityDetailsScreenBinding b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +35,13 @@ public class DetailsScreen extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(SearchResultsActivity.HAS_BACK_PRESSED, true);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 }

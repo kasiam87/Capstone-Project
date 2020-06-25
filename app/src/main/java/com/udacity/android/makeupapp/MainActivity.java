@@ -39,10 +39,11 @@ public class MainActivity extends AppCompatActivity {
 //        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(myToolbar);
 
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        b.searchBox.setSearchableInfo(
-                searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        if (searchManager != null) {
+            b.searchBox.setSearchableInfo(
+                    searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
+        }
 
         b.searchBox.setIconifiedByDefault(false);
         b.searchBox.setSubmitButtonEnabled(true);
@@ -64,14 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.favorites){
-            showFavoriteProducts();
+        if (item.getItemId() == R.id.favorites) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showFavoriteProducts() {
-        Intent intent = new Intent(this, FavoritesActivity.class);
-        startActivity(intent);
     }
 }

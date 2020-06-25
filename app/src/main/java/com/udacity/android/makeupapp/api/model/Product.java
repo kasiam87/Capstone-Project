@@ -38,7 +38,7 @@ public class Product {
 
     public String description;
 
-    public Integer rating;
+    public Float rating;
 
     public String category;
 

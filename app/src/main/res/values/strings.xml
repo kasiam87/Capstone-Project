@@ -2,6 +2,7 @@
     <string name="app_name">Makeup App</string>
     <string name="favorites_menu">Favorites</string>
     <string name="no_favorites_error_msg">You don\'t have any favorite item</string>
+    <string name="no_connection_error_msg">No results found.\nPlease check your internet connection.</string>
     <string name="search_hint">Search for products</string>
     <string name="home_screen_image">home screen image</string>
 

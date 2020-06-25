@@ -3,6 +3,8 @@ package com.udacity.android.makeupapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +33,7 @@ public class FavoritesActivity extends AppCompatActivity {
         showFavorites();
     }
 
-    private void showFavorites(){
+    private void showFavorites() {
         FavoritesViewModel viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         viewModel.getFavorites().observe(this, favorites -> {
             Timber.d("Receiving database update from ViewModel");
@@ -53,5 +55,13 @@ public class FavoritesActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(SearchResultsActivity.HAS_BACK_PRESSED, true);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 }

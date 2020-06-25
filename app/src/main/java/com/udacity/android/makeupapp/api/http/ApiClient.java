@@ -7,6 +7,7 @@ import com.udacity.android.makeupapp.api.model.Product;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -17,11 +18,14 @@ public class ApiClient {
 
     private static final String PRODUCTS_BASE_URI = "http://makeup-api.herokuapp.com/";
 
-    public List<Product> getProducts() throws IOException {
+    public List<Product> getProducts(String searchTerm) throws IOException {
         ApiInterface productRequest = getRetrofitClient(PRODUCTS_BASE_URI)
                 .create(ApiInterface.class);
 
-        Call<List<Product>> call = productRequest.getProducts(new HashMap<>());
+        Map<String, String> queryMap = new HashMap<>();
+        queryMap.put("brand", searchTerm);
+
+        Call<List<Product>> call = productRequest.getProducts(queryMap);
         Timber.d("Performing api call %s", call.request().toString());
 
         return call.execute().body();
