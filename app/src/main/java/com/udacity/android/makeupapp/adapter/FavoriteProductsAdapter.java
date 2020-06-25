@@ -10,14 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
 import com.udacity.android.makeupapp.R;
 import com.udacity.android.makeupapp.api.model.Product;
+import com.udacity.android.makeupapp.utils.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProductsAdapter.FavoriteProductsViewHolder> {
 
@@ -36,18 +34,10 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
     @Override
     public void onBindViewHolder(@NonNull FavoriteProductsViewHolder viewHolder, int position) {
         Product product = products.get(position);
-        Timber.d("Set text to " + product.brand);
         viewHolder.brand.setText(product.brand);
         viewHolder.name.setText(product.name);
         viewHolder.price.setText(product.price);
-        loadImage(product.imageLink, viewHolder.image);
-    }
-
-    public static void loadImage(String pathToImage, ImageView image) {
-        Picasso.get()
-                .load(pathToImage)
-//                .error(R.drawable.placeholder_error)
-                .into(image);
+        ImageLoader.loadImage(product.imageLink, viewHolder.image);
     }
 
     @Override
@@ -62,7 +52,7 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
         TextView name;
         TextView price;
 
-        FavoriteProductsViewHolder(View view){
+        FavoriteProductsViewHolder(View view) {
             super(view);
             brand = view.findViewById(R.id.favorite_product_brand);
             name = view.findViewById(R.id.favorite_product_name);
@@ -96,7 +86,7 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
     }
 
     public ArrayList<Product> getFavoriteProducts() {
-        if (products == null){
+        if (products == null) {
             return new ArrayList<>();
         }
         return new ArrayList<>(products);

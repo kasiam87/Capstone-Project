@@ -142,9 +142,9 @@ public class SearchResultsActivity extends AppCompatActivity
     private void showResults(List<Product> products) {
         if (products != null && !products.isEmpty()) {
             Timber.d("Show products");
-            searchResultsAdapter.setSearchResults(products);
             ProductsDB favoritesDB = ProductsDB.getInstance(this);
             searchResultsAdapter.setDB(favoritesDB);
+            searchResultsAdapter.setSearchResults(products);
             b.searchResultsRecyclerView.setVisibility(View.VISIBLE);
             b.noConnectionErrorMsg.setVisibility(View.GONE);
         } else {
@@ -159,8 +159,8 @@ public class SearchResultsActivity extends AppCompatActivity
 
         searchTermBundle.putString(SEARCH_TERM, searchTerm);
         LoaderManager loaderManager = LoaderManager.getInstance(this);
-        Loader<List<Product>> moviesLoader = loaderManager.getLoader(RESULTS_LOADER_ID);
-        if (moviesLoader == null) {
+        Loader<List<Product>> searchResultsLoader = loaderManager.getLoader(RESULTS_LOADER_ID);
+        if (searchResultsLoader == null) {
             loaderManager.initLoader(RESULTS_LOADER_ID, searchTermBundle, this).forceLoad();
         } else {
             loaderManager.restartLoader(RESULTS_LOADER_ID, searchTermBundle, this).forceLoad();
@@ -182,6 +182,7 @@ public class SearchResultsActivity extends AppCompatActivity
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+
     }
 
 }
