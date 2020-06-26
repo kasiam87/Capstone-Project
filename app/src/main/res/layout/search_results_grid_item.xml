@@ -44,10 +44,12 @@
 
             <CheckBox
                 android:id="@+id/results_add_to_favorites_button"
-                android:button="@drawable/ic_heart_outline"
+                android:button="@drawable/heart_unchecked"
                 android:contentDescription="@string/add_to_favorite_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_gravity="end|bottom" />
 
         </LinearLayout>
 

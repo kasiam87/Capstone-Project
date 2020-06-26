@@ -23,4 +23,7 @@ public interface ProductDao {
     @Delete
     void deleteFavorite(Product product);
 
+    @Query("SELECT EXISTS (SELECT 1 FROM favorites WHERE id=:id)")
+    int isFavorite(int id);
+
 }

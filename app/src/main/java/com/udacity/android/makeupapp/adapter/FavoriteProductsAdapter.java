@@ -1,6 +1,5 @@
 package com.udacity.android.makeupapp.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,16 @@ import java.util.List;
 public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProductsAdapter.FavoriteProductsViewHolder> {
 
     private List<Product> products;
+    private final FavoriteProductsAdapterOnClickHandler productClickHandler;
+
+    public FavoriteProductsAdapter(FavoriteProductsAdapterOnClickHandler clickHandler) {
+        productClickHandler = clickHandler;
+    }
 
     @NonNull
     @Override
     public FavoriteProductsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        Context context = viewGroup.getContext();
-
-        View view = LayoutInflater.from(context)
+        View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.favorites_grid_item, viewGroup, false);
         return new FavoriteProductsViewHolder(view);
     }
@@ -67,12 +69,6 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
             Product product = products.get(adapterPosition);
             productClickHandler.onClick(product);
         }
-    }
-
-    private final FavoriteProductsAdapterOnClickHandler productClickHandler;
-
-    public FavoriteProductsAdapter(FavoriteProductsAdapterOnClickHandler clickHandler) {
-        productClickHandler = clickHandler;
     }
 
     public void setFavoriteProducts(List<Product> products) {

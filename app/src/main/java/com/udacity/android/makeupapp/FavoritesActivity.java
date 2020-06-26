@@ -57,7 +57,6 @@ public class FavoritesActivity extends AppCompatActivity implements FavoriteProd
         FavoritesViewModel viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         viewModel.getFavorites().observe(this, favorites -> {
             Timber.d("Receiving database update from ViewModel");
-            // show favorites or error
             favoriteProductsAdapter.setFavoriteProducts(favorites);
             if (favorites != null && !favorites.isEmpty()) {
                 b.favoritesRecyclerView.setVisibility(View.VISIBLE);

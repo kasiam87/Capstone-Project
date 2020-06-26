@@ -1,6 +1,5 @@
 package com.udacity.android.makeupapp.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +12,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.android.makeupapp.R;
 import com.udacity.android.makeupapp.api.model.Product;
-import com.udacity.android.makeupapp.database.AppExecutors;
 import com.udacity.android.makeupapp.database.ProductsDB;
+import com.udacity.android.makeupapp.database.DatabaseCall;
 import com.udacity.android.makeupapp.utils.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.SearchResultViewHolder> {
 
     private List<Product> searchResults;
     private ProductsDB favoritesDB;
+    private final SearchResultsAdapterOnClickHandler resultsClickHandler;
+
+    public SearchResultsAdapter(SearchResultsAdapterOnClickHandler clickHandler) {
+        resultsClickHandler = clickHandler;
+    }
 
     @NonNull
     @Override
     public SearchResultViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        Context context = viewGroup.getContext();
-
-        View view = LayoutInflater.from(context)
+        View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.search_results_grid_item, viewGroup, false);
         return new SearchResultViewHolder(view);
     }
@@ -43,24 +46,43 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         viewHolder.price.setText(product.price);
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
 
+        boolean isFavourite = new DatabaseCall().execute(() ->
+                favoritesDB.productDao().isFavorite(product.id)) == 1;
+
+        if (isFavourite){
+            viewHolder.addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
+        } else {
+            viewHolder.addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
+        }
+
         viewHolder.addToFavoritesButton
                 .setOnCheckedChangeListener((buttonView, isChecked) ->
-                        updateFavoritesDB(product, viewHolder.addToFavoritesButton));
-    }
-
-    public void updateFavoritesDB(Product product, CheckBox addToFavoritesButton) {
-        AppExecutors.getInstance().diskIO().execute(() -> {
-            if (addToFavoritesButton.isChecked()) {
-                favoritesDB.productDao().insertFavorite(product);
-            } else {
-                favoritesDB.productDao().deleteFavorite(product);
-            }
-        });
+                        addOrRemoveFromFavorites(product, viewHolder.addToFavoritesButton, isFavourite));
     }
 
     @Override
     public int getItemCount() {
         return (searchResults == null) ? 0 : searchResults.size();
+    }
+
+    public void addOrRemoveFromFavorites(Product product, CheckBox addToFavoritesButton, boolean isFavorite) {
+        if (isFavorite) {
+            boolean isUpdated = new DatabaseCall().execute(() -> {
+                favoritesDB.productDao().deleteFavorite(product);
+                return true;
+            });
+            if (isUpdated) {
+                addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
+            }
+        } else {
+            boolean isUpdated = new DatabaseCall().execute(() -> {
+                favoritesDB.productDao().insertFavorite(product);
+                return true;
+            });
+            if (isUpdated) {
+                addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
+            }
+        }
     }
 
     class SearchResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -87,12 +109,6 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
             Product product = searchResults.get(adapterPosition);
             resultsClickHandler.onClick(product);
         }
-    }
-
-    private final SearchResultsAdapterOnClickHandler resultsClickHandler;
-
-    public SearchResultsAdapter(SearchResultsAdapterOnClickHandler clickHandler) {
-        resultsClickHandler = clickHandler;
     }
 
     public void setSearchResults(List<Product> searchResults) {
