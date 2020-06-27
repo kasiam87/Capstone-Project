@@ -12,13 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.android.makeupapp.R;
 import com.udacity.android.makeupapp.api.model.Product;
+import com.udacity.android.makeupapp.database.AnotherThreadUsingRepository;
 import com.udacity.android.makeupapp.database.ProductsDB;
-import com.udacity.android.makeupapp.database.DatabaseCall;
 import com.udacity.android.makeupapp.utils.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.SearchResultViewHolder> {
 
@@ -46,10 +45,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         viewHolder.price.setText(product.price);
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
 
-        boolean isFavourite = new DatabaseCall().execute(() ->
-                favoritesDB.productDao().isFavorite(product.id)) == 1;
-
-        if (isFavourite){
+        boolean isFavorite = new AnotherThreadUsingRepository(favoritesDB).isFavorite(product);
+        if (isFavorite){
             viewHolder.addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
         } else {
             viewHolder.addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
@@ -57,7 +54,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
         viewHolder.addToFavoritesButton
                 .setOnCheckedChangeListener((buttonView, isChecked) ->
-                        addOrRemoveFromFavorites(product, viewHolder.addToFavoritesButton, isFavourite));
+                        addOrRemoveFromFavorites(product, viewHolder.addToFavoritesButton));
     }
 
     @Override
@@ -65,23 +62,16 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         return (searchResults == null) ? 0 : searchResults.size();
     }
 
-    public void addOrRemoveFromFavorites(Product product, CheckBox addToFavoritesButton, boolean isFavorite) {
+    public void addOrRemoveFromFavorites(Product product, CheckBox addToFavoritesButton) {
+        boolean isFavorite = new AnotherThreadUsingRepository(favoritesDB).isFavorite(product);
         if (isFavorite) {
-            boolean isUpdated = new DatabaseCall().execute(() -> {
-                favoritesDB.productDao().deleteFavorite(product);
-                return true;
-            });
-            if (isUpdated) {
-                addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
-            }
+            new AnotherThreadUsingRepository(favoritesDB)
+                    .deleteFavorite(product);
+            addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
         } else {
-            boolean isUpdated = new DatabaseCall().execute(() -> {
-                favoritesDB.productDao().insertFavorite(product);
-                return true;
-            });
-            if (isUpdated) {
-                addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
-            }
+            new AnotherThreadUsingRepository(favoritesDB)
+                    .insertFavorite(product);
+            addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
         }
     }
 

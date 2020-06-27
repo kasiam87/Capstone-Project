@@ -23,6 +23,7 @@ public abstract class ProductsDB extends RoomDatabase {
                 Timber.d("Creating new database instance");
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         ProductsDB.class, ProductsDB.DATABASE_NAME)
+                        .allowMainThreadQueries()
                         .build();
             }
         }
