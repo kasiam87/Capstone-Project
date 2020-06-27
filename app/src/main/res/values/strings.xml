@@ -7,5 +7,6 @@
     <string name="home_screen_image">home screen image</string>
     <string name="product_image">product image</string>
     <string name="add_to_favorite_button">Add to favorites button</string>
+    <string name="remove_from_favorite_button">Remove from favorites button</string>
 
 </resources>

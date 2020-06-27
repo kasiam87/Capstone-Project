@@ -4,4 +4,29 @@
     <dimen name="error_msg_text_size">20sp</dimen>
     <dimen name="loading_size">45dp</dimen>
     <dimen name="home_image_margin">16dp</dimen>
+    <dimen name="favorite_image_width">140dp</dimen>
+    <dimen name="favorite_image_margin">8dp</dimen>
+
+    <dimen name="product_brand">16sp</dimen>
+    <dimen name="product_name">14sp</dimen>
+    <dimen name="product_price">16sp</dimen>
+
+    <dimen name="close_icon_margin">8dp</dimen>
+
+    <dimen name="card_margin">8dp</dimen>
+    <dimen name="favorites_card_height">120dp</dimen>
+    <dimen name="products_card_height">250dp</dimen>
+    <dimen name="card_corner_radius">3dp</dimen>
+
+    <dimen name="favorite_product_details_margin_start">8dp</dimen>
+    <dimen name="favorite_product_details_margin_top">16dp</dimen>
+    <dimen name="favorite_product_details_width">200dp</dimen>
+    <dimen name="favorite_product_image_width">100dp</dimen>
+    <dimen name="favorite_product_image_margin">8dp</dimen>
+
+    <dimen name="product_details_padding">16dp</dimen>
+    <dimen name="product_image_height">120dp</dimen>
+    <dimen name="product_favorite_button_margin">16dp</dimen>
+
+
 </resources>

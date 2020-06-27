@@ -1,5 +1,6 @@
 package com.udacity.android.makeupapp.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
     private List<Product> searchResults;
     private ProductsDB favoritesDB;
+
+    private Context context;
     private final SearchResultsAdapterOnClickHandler resultsClickHandler;
 
     public SearchResultsAdapter(SearchResultsAdapterOnClickHandler clickHandler) {
@@ -32,7 +35,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     @NonNull
     @Override
     public SearchResultViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext())
+        context = viewGroup.getContext();
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.search_results_grid_item, viewGroup, false);
         return new SearchResultViewHolder(view);
     }
@@ -42,7 +46,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         Product product = searchResults.get(position);
         viewHolder.brand.setText(product.brand);
         viewHolder.name.setText(product.name);
-        viewHolder.price.setText(product.price);
+        viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
 
         boolean isFavorite = new AnotherThreadUsingRepository(favoritesDB).isFavorite(product);
@@ -68,10 +72,12 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
             new AnotherThreadUsingRepository(favoritesDB)
                     .deleteFavorite(product);
             addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
+            addToFavoritesButton.setContentDescription(context.getString(R.string.add_to_favorite_button));
         } else {
             new AnotherThreadUsingRepository(favoritesDB)
                     .insertFavorite(product);
             addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
+            addToFavoritesButton.setContentDescription(context.getString(R.string.remove_from_favorite_button));
         }
     }
 

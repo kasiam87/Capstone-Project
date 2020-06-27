@@ -26,7 +26,7 @@ public class AnotherThreadUsingRepository implements ProductRepository {
     @Override
     public void insertFavorite(Product product) {
         execute(() -> {
-            productsDB.productDao().insertFavorite(product);;
+            productsDB.productDao().insertFavorite(product);
             return true;
         });
     }

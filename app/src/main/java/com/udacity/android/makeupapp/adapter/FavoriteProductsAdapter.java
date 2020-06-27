@@ -38,7 +38,7 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
         Product product = products.get(position);
         viewHolder.brand.setText(product.brand);
         viewHolder.name.setText(product.name);
-        viewHolder.price.setText(product.price);
+        viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
     }
 
