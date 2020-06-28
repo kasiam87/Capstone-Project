@@ -3,6 +3,7 @@ package com.udacity.android.makeupapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
 import androidx.loader.content.Loader;
@@ -24,6 +25,7 @@ import com.udacity.android.makeupapp.api.http.ApiClient;
 import com.udacity.android.makeupapp.api.model.Product;
 import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.databinding.ActivitySearchResultsBinding;
+import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -179,10 +181,20 @@ public class SearchResultsActivity extends AppCompatActivity
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 this.hasBackPressed = data.getBooleanExtra(HAS_BACK_PRESSED, true);
+                reloadResults();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
 
     }
 
+    private void reloadResults() {
+        FavoritesViewModel viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        viewModel.getFavorites().observe(this, favorites -> {
+            Timber.d("Reload products");
+            ProductsDB favoritesDB = ProductsDB.getInstance(this);
+            searchResultsAdapter.setDB(favoritesDB);
+            searchResultsAdapter.setSearchResults(searchResultsAdapter.getSearchResults());
+        });
+    }
 }

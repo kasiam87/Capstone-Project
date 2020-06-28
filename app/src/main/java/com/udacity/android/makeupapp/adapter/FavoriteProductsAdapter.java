@@ -3,6 +3,7 @@ package com.udacity.android.makeupapp.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.udacity.android.makeupapp.R;
 import com.udacity.android.makeupapp.api.model.Product;
+import com.udacity.android.makeupapp.database.AnotherThreadUsingRepository;
+import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.utils.ImageLoader;
 
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.List;
 public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProductsAdapter.FavoriteProductsViewHolder> {
 
     private List<Product> products;
+    private ProductsDB favoritesDB;
     private final FavoriteProductsAdapterOnClickHandler productClickHandler;
 
     public FavoriteProductsAdapter(FavoriteProductsAdapterOnClickHandler clickHandler) {
@@ -40,6 +44,16 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
         viewHolder.name.setText(product.name);
         viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
+
+        viewHolder.removeButton.setOnCheckedChangeListener((buttonView, isChecked) ->
+                removeFromFavorites(product, position));
+    }
+
+    public void removeFromFavorites(Product product, int position) {
+        new AnotherThreadUsingRepository(favoritesDB).deleteFavorite(product);
+        products.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, products.size());
     }
 
     @Override
@@ -53,6 +67,7 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
         TextView brand;
         TextView name;
         TextView price;
+        CheckBox removeButton;
 
         FavoriteProductsViewHolder(View view) {
             super(view);
@@ -60,6 +75,7 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
             name = view.findViewById(R.id.favorite_product_name);
             price = view.findViewById(R.id.favorite_product_price);
             image = view.findViewById(R.id.favorite_product_image);
+            removeButton = view.findViewById(R.id.favorites_remove_button);
             view.setOnClickListener(this);
         }
 
@@ -86,6 +102,10 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
             return new ArrayList<>();
         }
         return new ArrayList<>(products);
+    }
+
+    public void setDB(ProductsDB favoritesDB) {
+        this.favoritesDB = favoritesDB;
     }
 }
 

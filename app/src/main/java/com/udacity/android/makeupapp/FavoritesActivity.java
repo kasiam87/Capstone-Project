@@ -59,6 +59,8 @@ public class FavoritesActivity extends AppCompatActivity implements FavoriteProd
             Timber.d("Receiving database update from ViewModel");
             favoriteProductsAdapter.setFavoriteProducts(favorites);
             if (favorites != null && !favorites.isEmpty()) {
+                ProductsDB favoritesDB = ProductsDB.getInstance(this);
+                favoriteProductsAdapter.setDB(favoritesDB);
                 b.favoritesRecyclerView.setVisibility(View.VISIBLE);
                 b.noFavoritesErrorMsg.setVisibility(View.INVISIBLE);
             } else {
