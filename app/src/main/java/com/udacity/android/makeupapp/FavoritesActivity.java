@@ -20,6 +20,8 @@ import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
 import timber.log.Timber;
 
+import static com.udacity.android.makeupapp.constants.IntentExtras.PRODUCT_DETAILS_JSON;
+
 public class FavoritesActivity extends AppCompatActivity implements FavoriteProductsAdapterOnClickHandler {
 
     ActivityFavoritesBinding b;
@@ -34,7 +36,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoriteProd
         setContentView(b.getRoot());
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setTitle(getString(R.string.favorites_menu));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -91,7 +93,17 @@ public class FavoritesActivity extends AppCompatActivity implements FavoriteProd
     @Override
     public void onClick(Product product) {
         Intent intent = new Intent(this, DetailsScreen.class);
-        intent.putExtra(SearchResultsActivity.PRODUCT_DETAILS_JSON, new Gson().toJson(product));
+        intent.putExtra(PRODUCT_DETAILS_JSON, new Gson().toJson(product));
         startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                showFavorites();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

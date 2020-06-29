@@ -4,6 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DetailsScreen">
+
+    <ImageView
+        android:id="@+id/product_details_image"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="@dimen/favorite_product_image_margin"
+        android:contentDescription="@string/product_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/action_bar_heart" />
+
+    <TextView
+        android:id="@+id/product_detail_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/product_details_image"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="maybelline"/>
+
+    <TextView
+        android:id="@+id/product_detail_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="20sp"
+        android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_detail_brand"
+        tools:text="xxxxxxxxxxxxxxxxxxxxxxxx"/>
+
+    <TextView
+        android:id="@+id/product_detail_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product_detail_product_name"
+        tools:text="14.5$" />
+
+    <CheckBox
+        android:id="@+id/product_detail_favorite_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="8dp"
+        android:button="@drawable/detail_heart_unchecked"
+        android:contentDescription="@string/add_to_favorite_button"
+        app:layout_constraintTop_toBottomOf="@id/product_details_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:src="@drawable/detail_heart_unchecked"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

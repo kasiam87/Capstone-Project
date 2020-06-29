@@ -3,6 +3,7 @@ package com.udacity.android.makeupapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
@@ -33,6 +34,8 @@ import java.util.List;
 
 import timber.log.Timber;
 
+import static com.udacity.android.makeupapp.constants.IntentExtras.PRODUCT_DETAILS_JSON;
+
 public class SearchResultsActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<List<Product>>, SearchResultsAdapterOnClickHandler {
 
@@ -40,7 +43,6 @@ public class SearchResultsActivity extends AppCompatActivity
 
     private static final int RESULTS_LOADER_ID = 100;
     private static final String SEARCH_TERM = "SearchTerm";
-    public static final String PRODUCT_DETAILS_JSON = "productDetailsJson";
     public static final String HAS_BACK_PRESSED = "hasBackPressed";
 
     private SearchResultsAdapter searchResultsAdapter;
@@ -53,13 +55,13 @@ public class SearchResultsActivity extends AppCompatActivity
         b = ActivitySearchResultsBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String searchTerm = intent.getStringExtra(SearchManager.QUERY);
+
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle(searchTerm);
+            }
 
             GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
             b.searchResultsRecyclerView.setLayoutManager(layoutManager);
@@ -185,7 +187,6 @@ public class SearchResultsActivity extends AppCompatActivity
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-
     }
 
     private void reloadResults() {
