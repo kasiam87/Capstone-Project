@@ -82,24 +82,27 @@
             tools:text="14.5$" />
 
         <TextView
-            android:id="@+id/product_detail_rating"
-            android:layout_width="@dimen/product_detail_width"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_price"
-            tools:text="8" />
-
-        <TextView
             android:id="@+id/product_detail_link"
             android:layout_width="@dimen/product_detail_width"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_rating"
+            app:layout_constraintTop_toBottomOf="@+id/product_detail_price"
             tools:text="@string/link_display" />
+
+        <RatingBar
+            android:id="@+id/product_detail_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:paddingTop="16dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/product_detail_link"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:isIndicator="true" />
 
 <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--            android:id="@+id/product_detail_favorite_button_fab"-->

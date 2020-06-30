@@ -110,7 +110,7 @@ public class DetailsScreen extends AppCompatActivity {
 
     private void setRating() {
         if (product.rating != null) {
-            b.productDetailRating.setText(String.format("Rating: %s", product.rating));
+            b.productDetailRating.setRating(product.rating);
         } else {
             b.productDetailRating.setVisibility(GONE);
         }
