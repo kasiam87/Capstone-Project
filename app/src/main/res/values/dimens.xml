@@ -27,6 +27,8 @@
     <dimen name="product_details_padding">16dp</dimen>
     <dimen name="product_image_height">120dp</dimen>
     <dimen name="product_favorite_button_margin">16dp</dimen>
+    <dimen name="product_detail_width">200dp</dimen>
+    <dimen name="color_margin">8dp</dimen>
 
 
 </resources>
