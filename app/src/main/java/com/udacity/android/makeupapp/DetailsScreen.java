@@ -50,6 +50,7 @@ public class DetailsScreen extends AppCompatActivity {
         b = ActivityDetailsScreenBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
+        setSupportActionBar(b.detailToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,6 +68,7 @@ public class DetailsScreen extends AppCompatActivity {
         } else {
             // Restore state
         }
+
     }
 
     private void showProductDetails(String productJson) {
@@ -75,6 +77,7 @@ public class DetailsScreen extends AppCompatActivity {
         ImageLoader.loadImage(product.imageLink, b.productDetailsImage);
         b.productDetailBrand.setText(StringFormatter.capitalize(product.brand));
         b.productDetailProductName.setText(product.name);
+        b.productDetailDescription.setText(product.description);
 
         setPrice();
         setFavoritesButton();

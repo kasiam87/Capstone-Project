@@ -39,7 +39,8 @@
 
         <activity android:name=".FavoritesActivity" />
 
-        <activity android:name=".DetailsScreen" />
+        <activity android:name=".DetailsScreen"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
