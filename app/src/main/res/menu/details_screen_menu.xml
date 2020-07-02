@@ -8,6 +8,14 @@
         android:id="@+id/action_share"
         android:icon="@android:drawable/ic_menu_share"
         android:title="@string/share_menu"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:orderInCategory="2"/>
+
+    <item
+        android:id="@+id/action_add_to_favorites"
+        android:icon="@drawable/heart_unchecked"
+        android:title="@string/share_menu"
+        app:showAsAction="always"
+        android:orderInCategory="1"/>
 
 </menu>

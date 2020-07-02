@@ -25,6 +25,7 @@ public class AnotherThreadUsingRepository implements ProductRepository {
 
     @Override
     public void insertFavorite(Product product) {
+        Timber.d("Add '%s' to favorites", product.name);
         execute(() -> {
             productsDB.productDao().insertFavorite(product);
             return true;
@@ -33,6 +34,7 @@ public class AnotherThreadUsingRepository implements ProductRepository {
 
     @Override
     public void deleteFavorite(Product product) {
+        Timber.d("Remove '%s' from favorites", product.name);
         execute(() -> {
             productsDB.productDao().deleteFavorite(product);
             return true;

@@ -55,7 +55,7 @@
             android:id="@+id/details_constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
+            android:paddingTop="32dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_collapseMode="parallax">
 
@@ -128,36 +128,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/product_detail_rating"
                 tools:text="aaaaaaaaaaaa" />
 
-            <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-            <!--            android:id="@+id/product_detail_favorite_button_fab"-->
-            <!--            android:layout_width="wrap_content"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_gravity="bottom|end"-->
-            <!--            android:layout_marginEnd="8dp"-->
-            <!--            android:layout_marginBottom="8dp"-->
-            <!--            android:contentDescription="@string/add_to_favorite_button"-->
-            <!--            android:src="@drawable/detail_heart_unchecked"-->
-            <!--            app:elevation="8dp"-->
-            <!--            app:fabSize="normal"-->
-            <!--            app:layout_constraintEnd_toEndOf="parent"-->
-            <!--            app:layout_constraintTop_toTopOf="parent"-->
-            <!--            app:pressedTranslationZ="16dp"-->
-            <!--            tools:src="@drawable/detail_heart_unchecked">-->
-
-            <CheckBox
-                android:id="@+id/product_detail_favorite_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="8dp"
-                android:button="@drawable/detail_heart_unchecked"
-                android:contentDescription="@string/add_to_favorite_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/detail_heart_unchecked" />
-            <!--        </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favorite_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/details_heart_unchecked"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_anchor="@id/detail_app_bar_layout"
+        app:layout_anchorGravity="bottom|right|end"
+        android:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

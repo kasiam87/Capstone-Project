@@ -17,9 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.URLUtil;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.udacity.android.makeupapp.api.model.Product;
 import com.udacity.android.makeupapp.database.AnotherThreadUsingRepository;
@@ -28,8 +28,6 @@ import com.udacity.android.makeupapp.databinding.ActivityDetailsScreenBinding;
 import com.udacity.android.makeupapp.utils.ImageLoader;
 import com.udacity.android.makeupapp.utils.StringFormatter;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
-
-import timber.log.Timber;
 
 import static android.view.View.GONE;
 
@@ -67,6 +65,12 @@ public class DetailsScreen extends AppCompatActivity {
             }
         } else {
             // Restore state
+            Intent intent = getIntent();
+            if (intent != null) {
+                if (intent.hasExtra(PRODUCT_DETAILS_JSON)) {
+                    showProductDetails(intent.getStringExtra(PRODUCT_DETAILS_JSON));
+                }
+            }
         }
 
     }
@@ -100,15 +104,15 @@ public class DetailsScreen extends AppCompatActivity {
             if (favorites != null && !favorites.isEmpty()) {
                 for (Product favorite : favorites) {
                     if (favorite.id.equals(product.id)) {
-                        b.productDetailFavoriteButton.setButtonDrawable(R.drawable.details_heart_checked);
-                        break;
+                        b.favoriteFab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_checked));
+                        return;
                     }
                 }
+                b.favoriteFab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_unchecked));
             }
         });
-        b.productDetailFavoriteButton
-                .setOnCheckedChangeListener((buttonView, isChecked) ->
-                        addOrRemoveFromFavorites(product, b.productDetailFavoriteButton));
+        b.favoriteFab.setOnClickListener(buttonView ->
+                addOrRemoveFromFavorites(b.favoriteFab));
     }
 
     private void setRating() {
@@ -171,15 +175,27 @@ public class DetailsScreen extends AppCompatActivity {
         }
     }
 
-    public void addOrRemoveFromFavorites(Product product, CheckBox favoriteButton) {
-        if (favoriteButton.isChecked()) {
-            Timber.d("Add '%s' to favorites", product.name);
-            new AnotherThreadUsingRepository(favoritesDB).insertFavorite(product);
-            favoriteButton.setButtonDrawable(R.drawable.details_heart_checked);
-        } else {
-            Timber.d("Remove '%s' from favorites", product.name);
+    public void addOrRemoveFromFavorites(FloatingActionButton fab) {
+        boolean isFavorite = new AnotherThreadUsingRepository(favoritesDB).isFavorite(product);
+        if (isFavorite) {
             new AnotherThreadUsingRepository(favoritesDB).deleteFavorite(product);
-            favoriteButton.setButtonDrawable(R.drawable.detail_heart_unchecked);
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_unchecked));
+        } else {
+            new AnotherThreadUsingRepository(favoritesDB).insertFavorite(product);
+            fab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_checked));
+        }
+    }
+
+    private void addOrRemoveFromFavorites(MenuItem item) {
+        boolean isFavorite = new AnotherThreadUsingRepository(favoritesDB).isFavorite(product);
+        if (isFavorite) {
+            new AnotherThreadUsingRepository(favoritesDB).deleteFavorite(product);
+            item.setIcon(getResources().getDrawable(R.drawable.heart_unchecked));
+            b.favoriteFab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_unchecked));
+        } else {
+            new AnotherThreadUsingRepository(favoritesDB).insertFavorite(product);
+            item.setIcon(getResources().getDrawable(R.drawable.heart_checked));
+            b.favoriteFab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_checked));
         }
     }
 
@@ -188,6 +204,9 @@ public class DetailsScreen extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.action_add_to_favorites:
+                addOrRemoveFromFavorites(item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -204,10 +223,37 @@ public class DetailsScreen extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.share, menu);
-        MenuItem menuItem = menu.findItem(R.id.action_share);
-        menuItem.setIntent(createShareIntent());
+        getMenuInflater().inflate(R.menu.details_screen_menu, menu);
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        shareItem.setIntent(createShareIntent());
+
+        MenuItem likeItem = menu.findItem(R.id.action_add_to_favorites);
+        b.detailAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
+                findViewById(R.id.action_add_to_favorites).setVisibility(View.VISIBLE);
+                setMenuFavoritesButton(likeItem);
+            } else if (verticalOffset == 0) {
+                findViewById(R.id.action_add_to_favorites).setVisibility(GONE);
+                setFavoritesButton();
+            }
+        });
+
         return true;
+    }
+
+    private void setMenuFavoritesButton(MenuItem menuItem) {
+        FavoritesViewModel viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        viewModel.getFavorites().observe(this, favorites -> {
+            if (favorites != null && !favorites.isEmpty()) {
+                for (Product favorite : favorites) {
+                    if (favorite.id.equals(product.id)) {
+                        menuItem.setIcon(getResources().getDrawable(R.drawable.heart_checked));
+                        return;
+                    }
+                }
+                menuItem.setIcon(getResources().getDrawable(R.drawable.heart_unchecked));
+            }
+        });
     }
 
     @Override
