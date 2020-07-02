@@ -232,7 +232,7 @@ public class DetailsScreen extends AppCompatActivity {
             if (Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()) {
                 findViewById(R.id.action_add_to_favorites).setVisibility(View.VISIBLE);
                 setMenuFavoritesButton(likeItem);
-            } else if (verticalOffset == 0) {
+            } else {
                 findViewById(R.id.action_add_to_favorites).setVisibility(GONE);
                 setFavoritesButton();
             }
