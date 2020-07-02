@@ -15,7 +15,7 @@
         android:id="@+id/action_add_to_favorites"
         android:icon="@drawable/heart_unchecked"
         android:title="@string/share_menu"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:orderInCategory="1"/>
 
 </menu>
