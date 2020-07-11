@@ -2,7 +2,6 @@ package com.udacity.android.makeupapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.app.SearchManager;
 import android.content.ComponentName;
@@ -21,7 +20,6 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding b;
-    public static final String QUERY = "QUERY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +31,6 @@ public class MainActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
-
-
-        // this if for replacing actionBar with toolbar. Also need to add theme AppTheme.NoActionBar in manifest
-//        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(myToolbar);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         if (searchManager != null) {

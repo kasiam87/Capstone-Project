@@ -3,7 +3,6 @@ package com.udacity.android.makeupapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ShareCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.AsyncTaskLoader;
@@ -24,6 +23,9 @@ import com.udacity.android.makeupapp.adapter.SearchResultsAdapter;
 import com.udacity.android.makeupapp.adapter.SearchResultsAdapterOnClickHandler;
 import com.udacity.android.makeupapp.api.http.ApiClient;
 import com.udacity.android.makeupapp.api.model.Product;
+import com.udacity.android.makeupapp.api.products.Brand;
+import com.udacity.android.makeupapp.api.products.Tag;
+import com.udacity.android.makeupapp.api.products.Type;
 import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.databinding.ActivitySearchResultsBinding;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
@@ -59,7 +61,11 @@ public class SearchResultsActivity extends AppCompatActivity
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String searchTerm = intent.getStringExtra(SearchManager.QUERY);
 
-            if (getSupportActionBar() != null) {
+            boolean isValidSearch = Brand.fromString(searchTerm) != null
+                    || Tag.fromString(searchTerm) != null
+                    || Type.fromString(searchTerm) != null;
+
+            if (getSupportActionBar() != null && isValidSearch) {
                 getSupportActionBar().setTitle(searchTerm);
             }
 
@@ -69,9 +75,19 @@ public class SearchResultsActivity extends AppCompatActivity
             searchResultsAdapter = new SearchResultsAdapter(this);
 
             if (savedInstanceState == null) {
-                searchForProducts(searchTerm);
+                if (isValidSearch) {
+                    searchForProducts(searchTerm);
+                } else {
+                    b.errorMsg.setText(String.format(getText(R.string.no_results_error_msg).toString(), searchTerm));
+                    b.errorMsg.setVisibility(View.VISIBLE);
+                }
             } else {
-                searchForProducts(searchTerm);
+                if (isValidSearch) {
+                    searchForProducts(searchTerm);
+                } else {
+                    b.errorMsg.setText(String.format(getText(R.string.no_results_error_msg).toString(), searchTerm));
+                    b.errorMsg.setVisibility(View.VISIBLE);
+                }
 //                restoreRecipesView(savedInstanceState);
             }
             b.searchResultsRecyclerView.setAdapter(searchResultsAdapter);
@@ -150,11 +166,11 @@ public class SearchResultsActivity extends AppCompatActivity
             searchResultsAdapter.setDB(favoritesDB);
             searchResultsAdapter.setSearchResults(products);
             b.searchResultsRecyclerView.setVisibility(View.VISIBLE);
-            b.noConnectionErrorMsg.setVisibility(View.GONE);
+            b.errorMsg.setVisibility(View.GONE);
         } else {
             Timber.d("No product found!");
             b.searchResultsRecyclerView.setVisibility(View.GONE);
-            b.noConnectionErrorMsg.setVisibility(View.VISIBLE);
+            b.errorMsg.setVisibility(View.VISIBLE);
         }
     }
 

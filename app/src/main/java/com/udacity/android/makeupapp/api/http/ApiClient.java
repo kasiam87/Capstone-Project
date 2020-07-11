@@ -3,6 +3,8 @@ package com.udacity.android.makeupapp.api.http;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.udacity.android.makeupapp.api.model.Product;
+import com.udacity.android.makeupapp.api.products.Brand;
+import com.udacity.android.makeupapp.api.products.Tag;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +25,13 @@ public class ApiClient {
                 .create(ApiInterface.class);
 
         Map<String, String> queryMap = new HashMap<>();
-        queryMap.put("brand", searchTerm);
+        if (Brand.fromString(searchTerm) != null) {
+            queryMap.put("brand", searchTerm);
+        } else if (Tag.fromString(searchTerm) != null) {
+            queryMap.put("product_tags", searchTerm);
+        } else {
+            queryMap.put("product_type", searchTerm);
+        }
 
         Call<List<Product>> call = productRequest.getProducts(queryMap);
         Timber.d("Performing api call %s", call.request().toString());
@@ -33,7 +41,7 @@ public class ApiClient {
 
     private Retrofit getRetrofitClient(String uri) {
         Gson gson = new GsonBuilder()
-                .setLenient() //todo remove
+                .setLenient()
                 .create();
 
         return new Retrofit.Builder()
