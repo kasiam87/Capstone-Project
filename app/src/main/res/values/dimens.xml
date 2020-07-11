@@ -27,8 +27,18 @@
     <dimen name="product_details_padding">16dp</dimen>
     <dimen name="product_image_height">120dp</dimen>
     <dimen name="product_favorite_button_margin">16dp</dimen>
+
     <dimen name="product_detail_width">200dp</dimen>
     <dimen name="color_margin">8dp</dimen>
-
+    <dimen name="details_app_bar_layout_height">400dp</dimen>
+    <dimen name="detail_margin">8dp</dimen>
+    <dimen name="rating_bar_padding_top">16dp</dimen>
+    <dimen name="detail_description_padding_top">16dp</dimen>
+    <dimen name="detail_description_end_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="fab_pressed_elevation">12dp</dimen>
+    <dimen name="brand_text_size">24sp</dimen>
+    <dimen name="detail_text_size">18sp</dimen>
 
 </resources>

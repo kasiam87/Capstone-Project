@@ -29,10 +29,10 @@
                 android:id="@+id/product_brand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/product_brand"
-                android:textStyle="bold"
                 android:paddingStart="@dimen/product_details_padding"
                 android:paddingEnd="@dimen/product_details_padding"
+                android:textSize="@dimen/product_brand"
+                android:textStyle="bold"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/product_image" />
 
@@ -40,9 +40,9 @@
                 android:id="@+id/product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/product_name"
                 android:paddingStart="@dimen/product_details_padding"
                 android:paddingEnd="@dimen/product_details_padding"
+                android:textSize="@dimen/product_name"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/product_brand" />
 
@@ -50,9 +50,9 @@
                 android:id="@+id/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/product_price"
                 android:paddingStart="@dimen/product_details_padding"
                 android:paddingEnd="@dimen/product_details_padding"
+                android:textSize="@dimen/product_price"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/product_name" />
 

@@ -22,28 +22,28 @@
                 android:layout_margin="@dimen/favorite_product_image_margin"
                 android:contentDescription="@string/product_image"
                 android:scaleType="centerCrop"
+                card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintBottom_toBottomOf="parent"/>
+                card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/favorite_product_brand"
                 android:layout_width="@dimen/favorite_product_details_width"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/favorite_product_details_margin_top"
                 android:layout_marginStart="@dimen/favorite_product_details_margin_start"
+                android:layout_marginTop="@dimen/favorite_product_details_margin_top"
                 android:textSize="@dimen/product_brand"
                 android:textStyle="bold"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintStart_toEndOf="@id/favorite_product_image" />
+                card_view:layout_constraintStart_toEndOf="@id/favorite_product_image"
+                card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/favorite_product_name"
                 android:layout_width="@dimen/favorite_product_details_width"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/favorite_product_details_margin_start"
-                android:textSize="@dimen/product_name"
                 android:maxLines="3"
+                android:textSize="@dimen/product_name"
                 card_view:layout_constraintStart_toEndOf="@id/favorite_product_image"
                 card_view:layout_constraintTop_toBottomOf="@+id/favorite_product_brand" />
 
@@ -64,8 +64,8 @@
                 android:layout_margin="@dimen/close_icon_margin"
                 android:button="@drawable/ic_baseline_close_24"
                 android:contentDescription="@string/remove_from_favorite_button"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"/>
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
