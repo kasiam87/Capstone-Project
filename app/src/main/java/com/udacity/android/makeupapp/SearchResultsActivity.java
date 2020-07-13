@@ -32,6 +32,7 @@ import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
@@ -46,6 +47,8 @@ public class SearchResultsActivity extends AppCompatActivity
     private static final int RESULTS_LOADER_ID = 100;
     private static final String SEARCH_TERM = "SearchTerm";
     public static final String HAS_BACK_PRESSED = "hasBackPressed";
+    public static final String SEARCH_RESULTS_ADAPTER_BUNDLE_KEY = "searchResultsAdapterBundleKey";
+    public static final String ERROR_MSG_BUNDLE_KEY = "errorMsgBundleKey";
 
     private SearchResultsAdapter searchResultsAdapter;
 
@@ -81,14 +84,10 @@ public class SearchResultsActivity extends AppCompatActivity
                     b.errorMsg.setText(String.format(getText(R.string.no_results_error_msg).toString(), searchTerm));
                     b.errorMsg.setVisibility(View.VISIBLE);
                 }
-            } else {
-                if (isValidSearch) {
-                    searchForProducts(searchTerm);
-                } else {
-                    b.errorMsg.setText(String.format(getText(R.string.no_results_error_msg).toString(), searchTerm));
-                    b.errorMsg.setVisibility(View.VISIBLE);
-                }
-//                restoreRecipesView(savedInstanceState);
+            }
+            else {
+                ArrayList<Product> results = savedInstanceState.getParcelableArrayList(SEARCH_RESULTS_ADAPTER_BUNDLE_KEY);
+                showResults(results, savedInstanceState.getString(ERROR_MSG_BUNDLE_KEY));
             }
             b.searchResultsRecyclerView.setAdapter(searchResultsAdapter);
         }
@@ -97,6 +96,8 @@ public class SearchResultsActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(@NotNull Bundle bundle) {
         super.onSaveInstanceState(bundle);
+        bundle.putParcelableArrayList(SEARCH_RESULTS_ADAPTER_BUNDLE_KEY, searchResultsAdapter.getSearchResults());
+        bundle.putString(ERROR_MSG_BUNDLE_KEY, b.errorMsg.getText().toString());
     }
 
     @Override
@@ -151,7 +152,7 @@ public class SearchResultsActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(@NonNull Loader<List<Product>> loader, List<Product> products) {
         b.loadingIndicator.setVisibility(View.GONE);
-        showResults(products);
+        showResults(products, getText(R.string.no_connection_error_msg).toString());
     }
 
     @Override
@@ -159,17 +160,18 @@ public class SearchResultsActivity extends AppCompatActivity
 
     }
 
-    private void showResults(List<Product> products) {
+    private void showResults(List<Product> products, String errorMsg) {
+        searchResultsAdapter.setSearchResults(products);
         if (products != null && !products.isEmpty()) {
             Timber.d("Show products");
             ProductsDB favoritesDB = ProductsDB.getInstance(this);
             searchResultsAdapter.setDB(favoritesDB);
-            searchResultsAdapter.setSearchResults(products);
             b.searchResultsRecyclerView.setVisibility(View.VISIBLE);
-            b.errorMsg.setVisibility(View.GONE);
+            b.errorMsg.setVisibility(View.INVISIBLE);
         } else {
             Timber.d("No product found!");
-            b.searchResultsRecyclerView.setVisibility(View.GONE);
+            b.searchResultsRecyclerView.setVisibility(View.INVISIBLE);
+            b.errorMsg.setText(errorMsg);
             b.errorMsg.setVisibility(View.VISIBLE);
         }
     }

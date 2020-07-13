@@ -56,23 +56,12 @@ public class DetailsScreen extends AppCompatActivity {
 
         favoritesDB = ProductsDB.getInstance(this);
 
-        if (savedInstanceState == null) {
-            Intent intent = getIntent();
-            if (intent != null) {
-                if (intent.hasExtra(PRODUCT_DETAILS_JSON)) {
-                    showProductDetails(intent.getStringExtra(PRODUCT_DETAILS_JSON));
-                }
-            }
-        } else {
-            // Restore state
-            Intent intent = getIntent();
-            if (intent != null) {
-                if (intent.hasExtra(PRODUCT_DETAILS_JSON)) {
-                    showProductDetails(intent.getStringExtra(PRODUCT_DETAILS_JSON));
-                }
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.hasExtra(PRODUCT_DETAILS_JSON)) {
+                showProductDetails(intent.getStringExtra(PRODUCT_DETAILS_JSON));
             }
         }
-
     }
 
     private void showProductDetails(String productJson) {

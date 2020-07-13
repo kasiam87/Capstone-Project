@@ -1,5 +1,6 @@
 package com.udacity.android.makeupapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,9 @@ import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.databinding.ActivityFavoritesBinding;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import timber.log.Timber;
 
 import static com.udacity.android.makeupapp.constants.IntentExtras.PRODUCT_DETAILS_JSON;
@@ -27,6 +31,8 @@ public class FavoritesActivity extends AppCompatActivity implements FavoriteProd
     ActivityFavoritesBinding b;
 
     private FavoriteProductsAdapter favoriteProductsAdapter;
+
+    public static final String FAVORITES_ADAPTER_BUNDLE_KEY = "favoritesAdapterBundleKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,29 +52,38 @@ public class FavoritesActivity extends AppCompatActivity implements FavoriteProd
         favoriteProductsAdapter = new FavoriteProductsAdapter(this);
 
         if (savedInstanceState == null) {
-            showFavorites();
+            getAndShowFavorites();
         } else {
-            showFavorites();
-//                restoreFavorites(savedInstanceState);
+            ArrayList<Product> results = savedInstanceState.getParcelableArrayList(FAVORITES_ADAPTER_BUNDLE_KEY);
+            showFavorites(results);
         }
         b.favoritesRecyclerView.setAdapter(favoriteProductsAdapter);
-        showFavorites();
     }
 
-    private void showFavorites() {
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(FAVORITES_ADAPTER_BUNDLE_KEY, favoriteProductsAdapter.getFavoriteProducts());
+    }
+
+    private void getAndShowFavorites() {
         FavoritesViewModel viewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         viewModel.getFavorites().observe(this, favorites -> {
             Timber.d("Receiving database update from ViewModel");
-            favoriteProductsAdapter.setFavoriteProducts(favorites);
-            if (favorites != null && !favorites.isEmpty()) {
-                ProductsDB favoritesDB = ProductsDB.getInstance(this);
-                favoriteProductsAdapter.setDB(favoritesDB);
-                b.favoritesRecyclerView.setVisibility(View.VISIBLE);
-                b.noFavoritesErrorMsg.setVisibility(View.INVISIBLE);
-            } else {
-                b.noFavoritesErrorMsg.setVisibility(View.VISIBLE);
-            }
+            showFavorites(favorites);
         });
+    }
+
+    private void showFavorites(List<Product> favorites) {
+        favoriteProductsAdapter.setFavoriteProducts(favorites);
+        if (favorites != null && !favorites.isEmpty()) {
+            ProductsDB favoritesDB = ProductsDB.getInstance(this);
+            favoriteProductsAdapter.setDB(favoritesDB);
+            b.favoritesRecyclerView.setVisibility(View.VISIBLE);
+            b.noFavoritesErrorMsg.setVisibility(View.INVISIBLE);
+        } else {
+            b.noFavoritesErrorMsg.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -101,7 +116,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoriteProd
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                showFavorites();
+                getAndShowFavorites();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         b.searchBox.setIconifiedByDefault(false);
         b.searchBox.setSubmitButtonEnabled(true);
-
-        //TODO add suggestions https://developer.android.com/guide/topics/search/adding-recent-query-suggestions
-
     }
 
     @Override
