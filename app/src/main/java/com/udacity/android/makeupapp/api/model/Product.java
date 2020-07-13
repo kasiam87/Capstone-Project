@@ -7,7 +7,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import com.udacity.android.makeupapp.api.model.typeconverter.ColorTypeConverter;
 import com.udacity.android.makeupapp.api.model.typeconverter.TagTypeConverter;
 
 @Entity(tableName = "favorites")
-public class Product implements Serializable, Parcelable {
+public class Product implements Parcelable {
 
     @PrimaryKey
     public Integer id;
@@ -38,33 +37,9 @@ public class Product implements Serializable, Parcelable {
     @SerializedName("product_link")
     public String productLink;
 
-    @SerializedName("website_link")
-    public String websiteLink;
-
     public String description;
 
     public Float rating;
-
-    public String category;
-
-    @SerializedName("product_type")
-    public String productType;
-
-    @SerializedName("tag_list")
-    @TypeConverters(TagTypeConverter.class)
-    public List<String> tagList;
-
-    @SerializedName("created_at")
-    public String createdAt;
-
-    @SerializedName("updated_at")
-    public String updatedAt;
-
-    @SerializedName("product_api_url")
-    public String productApiUrl;
-
-    @SerializedName("api_featured_image")
-    public String apiFeaturedImage;
 
     @SerializedName("product_colors")
     @TypeConverters(ColorTypeConverter.class)
@@ -83,21 +58,8 @@ public class Product implements Serializable, Parcelable {
         currency = in.readString();
         imageLink = in.readString();
         productLink = in.readString();
-        websiteLink = in.readString();
         description = in.readString();
         rating = in.readByte() == 0x00 ? null : in.readFloat();
-        category = in.readString();
-        productType = in.readString();
-        if (in.readByte() == 0x01) {
-            tagList = new ArrayList<>();
-            in.readList(tagList, String.class.getClassLoader());
-        } else {
-            tagList = null;
-        }
-        createdAt = in.readString();
-        updatedAt = in.readString();
-        productApiUrl = in.readString();
-        apiFeaturedImage = in.readString();
         if (in.readByte() == 0x01) {
             productColors = new ArrayList<>();
             in.readList(productColors, ProductColor.class.getClassLoader());
@@ -126,7 +88,6 @@ public class Product implements Serializable, Parcelable {
         dest.writeString(currency);
         dest.writeString(imageLink);
         dest.writeString(productLink);
-        dest.writeString(websiteLink);
         dest.writeString(description);
         if (rating == null) {
             dest.writeByte((byte) (0x00));
@@ -134,18 +95,6 @@ public class Product implements Serializable, Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeFloat(rating);
         }
-        dest.writeString(category);
-        dest.writeString(productType);
-        if (tagList == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(tagList);
-        }
-        dest.writeString(createdAt);
-        dest.writeString(updatedAt);
-        dest.writeString(productApiUrl);
-        dest.writeString(apiFeaturedImage);
         if (productColors == null) {
             dest.writeByte((byte) (0x00));
         } else {

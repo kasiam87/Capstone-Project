@@ -84,8 +84,7 @@ public class SearchResultsActivity extends AppCompatActivity
                     b.errorMsg.setText(String.format(getText(R.string.no_results_error_msg).toString(), searchTerm));
                     b.errorMsg.setVisibility(View.VISIBLE);
                 }
-            }
-            else {
+            } else {
                 ArrayList<Product> results = savedInstanceState.getParcelableArrayList(SEARCH_RESULTS_ADAPTER_BUNDLE_KEY);
                 showResults(results, savedInstanceState.getString(ERROR_MSG_BUNDLE_KEY));
             }
