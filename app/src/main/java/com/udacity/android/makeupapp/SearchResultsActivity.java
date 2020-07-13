@@ -150,7 +150,7 @@ public class SearchResultsActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<Product>> loader, List<Product> products) {
-        b.loadingIndicator.setVisibility(View.GONE);
+        b.loadingIndicator.setVisibility(View.INVISIBLE);
         showResults(products, getText(R.string.no_connection_error_msg).toString());
     }
 
