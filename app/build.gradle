@@ -29,6 +29,18 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        free {
+            dimension "version"
+            applicationIdSuffix ".free"
+        }
+        paid {
+            dimension "version"
+            applicationIdSuffix ".paid"
+        }
+    }
 }
 
 dependencies {
@@ -53,6 +65,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'com.google.android.material:material:1.1.0'
+
+    freeImplementation 'com.google.android.gms:play-services-ads:19.2.0'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

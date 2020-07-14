@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
 import com.udacity.android.makeupapp.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         b.searchBox.setIconifiedByDefault(false);
         b.searchBox.setSubmitButtonEnabled(true);
+
+        MobileAds.initialize(this, initializationStatus -> {});
+        AdRequest adRequest = new AdRequest.Builder().build();
+        b.adView.loadAd(adRequest);
     }
 
     @Override
