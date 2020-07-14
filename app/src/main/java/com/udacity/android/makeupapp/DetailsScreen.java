@@ -20,6 +20,7 @@ import android.webkit.URLUtil;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.udacity.android.makeupapp.api.model.Product;
 import com.udacity.android.makeupapp.database.AnotherThreadUsingRepository;
@@ -40,6 +41,8 @@ public class DetailsScreen extends AppCompatActivity {
     private Product product;
 
     private ProductsDB favoritesDB;
+
+    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class DetailsScreen extends AppCompatActivity {
                 showProductDetails(intent.getStringExtra(PRODUCT_DETAILS_JSON));
             }
         }
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     private void showProductDetails(String productJson) {
@@ -197,6 +202,14 @@ public class DetailsScreen extends AppCompatActivity {
             case R.id.action_add_to_favorites:
                 addOrRemoveFromFavorites(item);
                 return true;
+            case R.id.action_share:
+                startActivity(createShareIntent());
+
+                Bundle params = new Bundle();
+                params.putString(FirebaseAnalytics.Param.ITEM_ID, product.id.toString());
+                params.putString(FirebaseAnalytics.Param.ITEM_NAME, product.brand + ": " + product.name);
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, params);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -213,8 +226,6 @@ public class DetailsScreen extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.details_screen_menu, menu);
-        MenuItem shareItem = menu.findItem(R.id.action_share);
-        shareItem.setIntent(createShareIntent());
 
         MenuItem likeItem = menu.findItem(R.id.action_add_to_favorites);
         b.detailAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
