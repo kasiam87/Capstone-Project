@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:792747036677:android:9634d607f3260703158c6c",
+        "android_client_info": {
+          "package_name": "com.udacity.android.makeupapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792747036677-usthfd3t190dgulfj02ppb2b57le9dht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRoQY7jfrdfADbjzUa4OVwk3YuouanuD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792747036677-usthfd3t190dgulfj02ppb2b57le9dht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:792747036677:android:be58d75f549b16f4158c6c",
         "android_client_info": {
           "package_name": "com.udacity.android.makeupapp.free"
@@ -37,7 +66,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:792747036677:android:a4031996145974ef158c6c",
+        "mobilesdk_app_id": "1:792747036677:android:d73aad24be00adbb158c6c",
         "android_client_info": {
           "package_name": "com.udacity.android.makeupapp.paid"
         }
