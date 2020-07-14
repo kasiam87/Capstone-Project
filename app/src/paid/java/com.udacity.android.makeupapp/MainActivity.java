@@ -1,0 +1,64 @@
+package com.udacity.android.makeupapp;
+
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.udacity.android.makeupapp.databinding.ActivityMainBinding;
+
+import org.jetbrains.annotations.NotNull;
+
+import timber.log.Timber;
+
+public class MainActivity extends AppCompatActivity {
+
+    ActivityMainBinding b;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        b = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(b.getRoot());
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        if (searchManager != null) {
+            b.searchBox.setSearchableInfo(
+                    searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
+        }
+
+        b.searchBox.setIconifiedByDefault(false);
+        b.searchBox.setSubmitButtonEnabled(true);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NotNull Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.favorite, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.favorites) {
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

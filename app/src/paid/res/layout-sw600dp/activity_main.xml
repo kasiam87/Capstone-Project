@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <SearchView
+        android:id="@+id/search_box"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/search_view_background"
+        android:queryBackground="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@id/home_image1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/home_image1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/home_image_margin"
+        android:contentDescription="@string/home_screen_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image1"
+        app:layout_constraintEnd_toStartOf="@+id/home_image2"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_box"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.60" />
+
+    <ImageView
+        android:id="@+id/home_image2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/home_image_margin"
+        android:contentDescription="@string/home_screen_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintStart_toEndOf="@+id/home_image1"
+        app:layout_constraintTop_toBottomOf="@+id/search_box"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.35" />
+
+    <ImageView
+        android:id="@+id/home_image3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/home_screen_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/home_image4"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_image1"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.45" />
+
+    <ImageView
+        android:id="@+id/home_image4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/home_screen_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image4"
+        app:layout_constraintBottom_toTopOf="@+id/home_image5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintStart_toEndOf="@+id/home_image3"
+        app:layout_constraintTop_toBottomOf="@+id/home_image2"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.50" />
+
+    <ImageView
+        android:id="@+id/home_image5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/home_screen_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintStart_toEndOf="@+id/home_image3"
+        app:layout_constraintTop_toBottomOf="@+id/home_image4"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.50" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
