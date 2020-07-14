@@ -85,6 +85,11 @@ public class SearchResultsActivity extends AppCompatActivity
                     b.errorMsg.setVisibility(View.VISIBLE);
                 }
             } else {
+                Bundle searchTermBundle = new Bundle();
+
+                searchTermBundle.putString(SEARCH_TERM, searchTerm);
+                LoaderManager.getInstance(this).initLoader(RESULTS_LOADER_ID, searchTermBundle, this);
+
                 ArrayList<Product> results = savedInstanceState.getParcelableArrayList(SEARCH_RESULTS_ADAPTER_BUNDLE_KEY);
                 showResults(results, savedInstanceState.getString(ERROR_MSG_BUNDLE_KEY));
             }
@@ -187,7 +192,7 @@ public class SearchResultsActivity extends AppCompatActivity
             loaderManager.restartLoader(RESULTS_LOADER_ID, searchTermBundle, this).forceLoad();
         }
     }
-
+    
     @Override
     public void onClick(Product product) {
         Intent intent = new Intent(this, DetailsScreen.class);
