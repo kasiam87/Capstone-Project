@@ -41,4 +41,9 @@
     <dimen name="brand_text_size">24sp</dimen>
     <dimen name="detail_text_size">18sp</dimen>
 
+    <dimen name="widget_title_size">20sp</dimen>
+    <dimen name="widget_error_size">16sp</dimen>
+    <dimen name="widget_see_all_size">12sp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
+
 </resources>

@@ -49,6 +49,11 @@ public class Product implements Parcelable {
 
     }
 
+    public Product(String brand, String name){
+        this.brand = brand;
+        this.name = name;
+    }
+
     protected Product(Parcel in) {
         id = in.readByte() == 0x00 ? null : in.readInt();
         brand = in.readString();
