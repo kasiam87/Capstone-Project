@@ -17,6 +17,9 @@ public interface ProductDao {
     @Query("SELECT * FROM favorites ORDER BY name")
     LiveData<List<Product>> getFavorites();
 
+    @Query("SELECT * FROM favorites ORDER BY name")
+    List<Product> getFavoritesList();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFavorite(Product product);
 

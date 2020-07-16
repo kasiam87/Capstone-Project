@@ -6,8 +6,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.RemoteViews;
 
 import androidx.core.content.ContextCompat;
@@ -22,21 +20,14 @@ public class FavoritesWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // update each of the widgets with the remote adapter
         for (int appWidgetId: appWidgetIds) {
 
-            // Here we setup the intent which points to the FavoritesRemoteViewsService which will
-            // provide the views for this collection.
             Intent intent = new Intent(context, FavoritesRemoteViewsService.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            // When intents are compared, the extras are ignored, so we need to embed the extras
-            // into the data so that the extras will not be ignored.
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             remoteViews.setRemoteAdapter(appWidgetId, R.id.widget_list_view, intent);
 
-            // The empty view is displayed when the collection has no items. It should be a sibling
-            // of the collection view.
             remoteViews.setEmptyView(R.id.widget_list_view, R.id.widget_error);
 
             Intent openFavoritesIntent = new Intent(context, FavoritesActivity.class);

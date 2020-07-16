@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/widget_product_image"
         android:layout_width="@dimen/favorite_product_image_width"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:layout_margin="@dimen/favorite_product_image_margin"
         android:contentDescription="@string/product_image"
         android:scaleType="centerCrop" />
@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/favorite_product_details_margin_start"
             android:layout_marginTop="@dimen/favorite_product_details_margin_top"
-            android:textSize="@dimen/product_brand" />
+            android:textSize="@dimen/product_brand"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/widget_product_name"
