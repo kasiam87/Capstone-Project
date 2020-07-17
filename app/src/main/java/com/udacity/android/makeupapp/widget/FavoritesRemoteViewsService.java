@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.udacity.android.makeupapp.utils.StringFormatter.capitalize;
+
 public class FavoritesRemoteViewsService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -60,8 +62,12 @@ class FavoritesRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
             e.printStackTrace();
         }
 
-        remoteViews.setTextViewText(R.id.widget_product_brand, products.get(position).brand);
-        remoteViews.setTextViewText(R.id.widget_product_name, products.get(position).name);
+        if (products.get(position).brand != null && !products.get(position).brand.isEmpty()) {
+            remoteViews.setTextViewText(R.id.widget_product_brand, capitalize(products.get(position).brand.trim()));
+        }
+        if (products.get(position).name != null && !products.get(position).name.isEmpty()) {
+            remoteViews.setTextViewText(R.id.widget_product_name, capitalize(products.get(position).name.trim()));
+        }
 
         Bundle extras = new Bundle();
         extras.putInt(FavoritesWidgetProvider.EXTRA_ITEM, position);

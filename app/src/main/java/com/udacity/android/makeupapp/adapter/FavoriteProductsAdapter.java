@@ -19,6 +19,9 @@ import com.udacity.android.makeupapp.utils.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.udacity.android.makeupapp.utils.StringFormatter.capitalize;
+import static com.udacity.android.makeupapp.utils.ViewSetter.setTextView;
+
 public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProductsAdapter.FavoriteProductsViewHolder> {
 
     private List<Product> products;
@@ -40,8 +43,9 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
     @Override
     public void onBindViewHolder(@NonNull FavoriteProductsViewHolder viewHolder, int position) {
         Product product = products.get(position);
-        viewHolder.brand.setText(product.brand);
-        viewHolder.name.setText(product.name);
+        setTextView(product.brand, viewHolder.brand);
+        setTextView(product.name, viewHolder.name);
+
         viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
 

@@ -20,6 +20,8 @@ import com.udacity.android.makeupapp.utils.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.udacity.android.makeupapp.utils.ViewSetter.setTextView;
+
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.SearchResultViewHolder> {
 
     private List<Product> searchResults;
@@ -44,9 +46,10 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     @Override
     public void onBindViewHolder(@NonNull SearchResultViewHolder viewHolder, int position) {
         Product product = searchResults.get(position);
-        viewHolder.brand.setText(product.brand);
-        viewHolder.name.setText(product.name);
-        viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
+        setTextView(product.brand, viewHolder.brand);
+        setTextView(product.name, viewHolder.name);
+        setTextView(product.price, viewHolder.price);
+
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
 
         boolean isFavorite = new AnotherThreadUsingRepository(favoritesDB).isFavorite(product);

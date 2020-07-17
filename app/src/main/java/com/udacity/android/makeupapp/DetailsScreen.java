@@ -27,7 +27,6 @@ import com.udacity.android.makeupapp.database.AnotherThreadUsingRepository;
 import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.databinding.ActivityDetailsScreenBinding;
 import com.udacity.android.makeupapp.utils.ImageLoader;
-import com.udacity.android.makeupapp.utils.StringFormatter;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
 import timber.log.Timber;
@@ -35,6 +34,8 @@ import timber.log.Timber;
 import static android.view.View.GONE;
 
 import static com.udacity.android.makeupapp.constants.IntentExtras.PRODUCT_DETAILS_JSON;
+
+import static com.udacity.android.makeupapp.utils.ViewSetter.setTextView;
 
 public class DetailsScreen extends AppCompatActivity {
 
@@ -75,9 +76,9 @@ public class DetailsScreen extends AppCompatActivity {
         product = new Gson().fromJson(productJson, Product.class);
 
         ImageLoader.loadImage(product.imageLink, b.productDetailsImage);
-        b.productDetailBrand.setText(StringFormatter.capitalize(product.brand));
-        b.productDetailProductName.setText(product.name);
-        b.productDetailDescription.setText(product.description);
+        setTextView(product.brand, b.productDetailBrand);
+        setTextView(product.name, b.productDetailProductName);
+        setTextView(product.description, b.productDetailDescription);
 
         setPrice();
         setFavoritesButton();
@@ -87,7 +88,7 @@ public class DetailsScreen extends AppCompatActivity {
     }
 
     private void setPrice() {
-        if (product.price != null) {
+        if (product.price != null && !product.price.isEmpty()) {
             b.productDetailPrice.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
         } else {
             b.productDetailPrice.setVisibility(GONE);
