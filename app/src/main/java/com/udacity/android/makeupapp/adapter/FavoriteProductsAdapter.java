@@ -19,7 +19,6 @@ import com.udacity.android.makeupapp.utils.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.udacity.android.makeupapp.utils.StringFormatter.capitalize;
 import static com.udacity.android.makeupapp.utils.ViewSetter.setTextView;
 
 public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProductsAdapter.FavoriteProductsViewHolder> {
