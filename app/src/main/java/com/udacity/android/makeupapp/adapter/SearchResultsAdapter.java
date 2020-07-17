@@ -48,7 +48,9 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         Product product = searchResults.get(position);
         setTextView(product.brand, viewHolder.brand);
         setTextView(product.name, viewHolder.name);
-        setTextView(product.price, viewHolder.price);
+        if (product.price != null && !product.price.isEmpty()) {
+            viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
+        }
 
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
 
