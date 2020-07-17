@@ -30,6 +30,8 @@ import com.udacity.android.makeupapp.utils.ImageLoader;
 import com.udacity.android.makeupapp.utils.StringFormatter;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
 
+import timber.log.Timber;
+
 import static android.view.View.GONE;
 
 import static com.udacity.android.makeupapp.constants.IntentExtras.PRODUCT_DETAILS_JSON;
@@ -162,7 +164,11 @@ public class DetailsScreen extends AppCompatActivity {
                 previousColorView = colorView;
                 colorView.setLayoutParams(layoutParams);
 
-                colorView.setColorFilter(Color.parseColor(product.productColors.get(i).hexValue));
+                try {
+                    colorView.setColorFilter(Color.parseColor(product.productColors.get(i).hexValue));
+                } catch (IllegalArgumentException e) {
+                    Timber.d("Invalid color format");
+                }
 
                 constraintLayout.addView(colorView);
             }

@@ -10,13 +10,9 @@ public class ProductColor implements Parcelable {
     @SerializedName("hex_value")
     public String hexValue;
 
-    @SerializedName("colour_name")
-    public String colourName;
-
 
     protected ProductColor(Parcel in) {
         hexValue = in.readString();
-        colourName = in.readString();
     }
 
     @Override
@@ -27,7 +23,6 @@ public class ProductColor implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(hexValue);
-        dest.writeString(colourName);
     }
 
     @SuppressWarnings("unused")

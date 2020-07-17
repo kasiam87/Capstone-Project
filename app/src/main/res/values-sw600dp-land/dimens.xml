@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="detail_scrollview_margin">150dp</dimen>
+    <dimen name="product_details_padding">32dp</dimen>
+    <dimen name="product_detail_width">300dp</dimen>
+</resources>
