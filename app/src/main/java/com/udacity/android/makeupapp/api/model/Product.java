@@ -12,7 +12,6 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import com.udacity.android.makeupapp.api.model.typeconverter.ColorTypeConverter;
-import com.udacity.android.makeupapp.api.model.typeconverter.TagTypeConverter;
 
 @Entity(tableName = "favorites")
 public class Product implements Parcelable {
@@ -47,11 +46,6 @@ public class Product implements Parcelable {
 
     public Product(){
 
-    }
-
-    public Product(String brand, String name){
-        this.brand = brand;
-        this.name = name;
     }
 
     protected Product(Parcel in) {
