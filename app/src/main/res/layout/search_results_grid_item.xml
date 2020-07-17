@@ -19,7 +19,7 @@
                 android:id="@+id/product_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/product_image_height"
-                android:contentDescription="@string/product_image"
+                android:contentDescription="@string/product_image_cd"
                 android:scaleType="fitCenter"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/product_favorite_button_margin"
                 android:button="@drawable/heart_unchecked"
-                android:contentDescription="@string/add_to_favorite_button"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent" />
 

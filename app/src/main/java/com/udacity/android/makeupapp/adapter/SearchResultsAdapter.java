@@ -52,8 +52,10 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         boolean isFavorite = new AnotherThreadUsingRepository(favoritesDB).isFavorite(product);
         if (isFavorite){
             viewHolder.addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
+            viewHolder.addToFavoritesButton.setContentDescription(context.getString(R.string.remove_from_favorite_button_cd));
         } else {
             viewHolder.addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
+            viewHolder.addToFavoritesButton.setContentDescription(context.getString(R.string.add_to_favorite_button_cd));
         }
 
         viewHolder.addToFavoritesButton
@@ -72,12 +74,12 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
             new AnotherThreadUsingRepository(favoritesDB)
                     .deleteFavorite(product);
             addToFavoritesButton.setButtonDrawable(R.drawable.heart_unchecked);
-            addToFavoritesButton.setContentDescription(context.getString(R.string.add_to_favorite_button));
+            addToFavoritesButton.setContentDescription(context.getString(R.string.add_to_favorite_button_cd));
         } else {
             new AnotherThreadUsingRepository(favoritesDB)
                     .insertFavorite(product);
             addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
-            addToFavoritesButton.setContentDescription(context.getString(R.string.remove_from_favorite_button));
+            addToFavoritesButton.setContentDescription(context.getString(R.string.remove_from_favorite_button_cd));
         }
     }
 

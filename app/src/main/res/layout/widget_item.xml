@@ -10,7 +10,7 @@
         android:layout_width="@dimen/favorite_product_image_width"
         android:layout_height="80dp"
         android:layout_margin="@dimen/favorite_product_image_margin"
-        android:contentDescription="@string/product_image"
+        android:contentDescription="@string/product_image_cd"
         android:scaleType="centerCrop" />
 
     <LinearLayout

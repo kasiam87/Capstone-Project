@@ -20,7 +20,7 @@
                 android:layout_width="@dimen/favorite_product_image_width"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/favorite_product_image_margin"
-                android:contentDescription="@string/product_image"
+                android:contentDescription="@string/product_image_cd"
                 android:scaleType="centerCrop"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
                 android:layout_gravity="end|top"
                 android:layout_margin="@dimen/close_icon_margin"
                 android:button="@drawable/ic_baseline_close_24"
-                android:contentDescription="@string/remove_from_favorite_button"
+                android:contentDescription="@string/remove_from_favorite_button_cd"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />
 

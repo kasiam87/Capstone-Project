@@ -6,12 +6,15 @@
     <string name="no_results_error_msg">No results found for \'%s\'.</string>
     <string name="search_hint">Search for products</string>
     <string name="home_screen_image">home screen image</string>
-    <string name="product_image">product image</string>
-    <string name="add_to_favorite_button">Add to favorites button</string>
-    <string name="remove_from_favorite_button">Remove from favorites button</string>
     <string name="share_menu">Share Product</string>
     <string name="add_to_favorites_menu">Add to favorites</string>
     <string name="link_display">website</string>
     <string name="color">color</string>
     <string name="widget_no_favorites_msg">No favorites</string>
+
+    <string name="product_image_cd">product image</string>
+    <string name="product_description_cd">product description</string>
+    <string name="add_to_favorite_button_cd">Add to favorites</string>
+    <string name="remove_from_favorite_button_cd">Remove from favorites</string>
+    <string name="ratings_cd">ratings </string>
 </resources>

@@ -101,10 +101,12 @@ public class DetailsScreen extends AppCompatActivity {
                 for (Product favorite : favorites) {
                     if (favorite.id.equals(product.id)) {
                         b.favoriteFab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_checked));
+                        b.favoriteFab.setContentDescription(getString(R.string.remove_from_favorite_button_cd));
                         return;
                     }
                 }
                 b.favoriteFab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_unchecked));
+                b.favoriteFab.setContentDescription(getString(R.string.add_to_favorite_button_cd));
             }
         });
         b.favoriteFab.setOnClickListener(buttonView ->
@@ -114,6 +116,7 @@ public class DetailsScreen extends AppCompatActivity {
     private void setRating() {
         if (product.rating != null) {
             b.productDetailRating.setRating(product.rating);
+            b.productDetailRating.setContentDescription(getString(R.string.ratings_cd) + product.rating);
         } else {
             b.productDetailRating.setVisibility(GONE);
         }
@@ -180,9 +183,11 @@ public class DetailsScreen extends AppCompatActivity {
         if (isFavorite) {
             new AnotherThreadUsingRepository(favoritesDB).deleteFavorite(product);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_unchecked));
+            fab.setContentDescription(getResources().getString(R.string.add_to_favorite_button_cd));
         } else {
             new AnotherThreadUsingRepository(favoritesDB).insertFavorite(product);
             fab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_checked));
+            fab.setContentDescription(getResources().getString(R.string.remove_from_favorite_button_cd));
         }
     }
 
