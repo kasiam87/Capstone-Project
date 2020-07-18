@@ -4,7 +4,17 @@ Api Documentation:
 http://makeup-api.herokuapp.com/
 
 Examples of searches:
+
+By brand:
 maybelline
 nyx
+stila
+
+By tag:
 vegan
-lipstick
+natural
+
+By type:
+eyeliner
+blush
+mascara

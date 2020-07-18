@@ -119,6 +119,7 @@ public class DetailsScreen extends AppCompatActivity {
             b.productDetailRating.setRating(product.rating);
             b.productDetailRating.setContentDescription(getString(R.string.ratings_cd) + product.rating);
         } else {
+            Timber.d("Rating object is null");
             b.productDetailRating.setVisibility(GONE);
         }
     }
@@ -130,6 +131,7 @@ public class DetailsScreen extends AppCompatActivity {
             String link = String.format("<a href='%s'> %s </a>", product.productLink, getString(R.string.link_display));
             b.productDetailLink.setText(Html.fromHtml(link));
         } else {
+            Timber.d("Product link is invalid");
             b.productDetailLink.setVisibility(GONE);
         }
     }

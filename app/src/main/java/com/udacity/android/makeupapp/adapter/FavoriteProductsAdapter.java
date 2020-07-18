@@ -19,6 +19,8 @@ import com.udacity.android.makeupapp.utils.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 import static com.udacity.android.makeupapp.utils.ViewSetter.setTextView;
 
 public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProductsAdapter.FavoriteProductsViewHolder> {
@@ -45,7 +47,12 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
         setTextView(product.brand, viewHolder.brand);
         setTextView(product.name, viewHolder.name);
 
-        viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
+        if (product.price != null && !product.price.isEmpty()) {
+            viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
+        } else {
+            Timber.d("Price is not available");
+            viewHolder.price.setVisibility(View.GONE);
+        }
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
 
         viewHolder.removeButton.setOnCheckedChangeListener((buttonView, isChecked) ->

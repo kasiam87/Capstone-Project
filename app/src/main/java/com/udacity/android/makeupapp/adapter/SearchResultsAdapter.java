@@ -20,6 +20,8 @@ import com.udacity.android.makeupapp.utils.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 import static com.udacity.android.makeupapp.utils.ViewSetter.setTextView;
 
 public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdapter.SearchResultViewHolder> {
@@ -50,6 +52,9 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         setTextView(product.name, viewHolder.name);
         if (product.price != null && !product.price.isEmpty()) {
             viewHolder.price.setText(String.format("%s%s", product.price, product.priceSign != null ? product.priceSign : ""));
+        } else {
+            Timber.d("Price is not available");
+            viewHolder.price.setVisibility(View.GONE);
         }
 
         ImageLoader.loadImage(product.imageLink, viewHolder.image);
