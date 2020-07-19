@@ -28,6 +28,7 @@ import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.databinding.ActivityDetailsScreenBinding;
 import com.udacity.android.makeupapp.utils.ImageLoader;
 import com.udacity.android.makeupapp.viewmodel.FavoritesViewModel;
+import com.udacity.android.makeupapp.widget.FavoritesWidgetProvider;
 
 import timber.log.Timber;
 
@@ -192,6 +193,7 @@ public class DetailsScreen extends AppCompatActivity {
             fab.setImageDrawable(getResources().getDrawable(R.drawable.details_heart_checked));
             fab.setContentDescription(getResources().getString(R.string.remove_from_favorite_button_cd));
         }
+        FavoritesWidgetProvider.updateAllWidgets(getApplicationContext());
     }
 
     private void addOrRemoveFromFavorites(MenuItem item) {

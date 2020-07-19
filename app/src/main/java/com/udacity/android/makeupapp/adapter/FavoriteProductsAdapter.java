@@ -1,5 +1,6 @@
 package com.udacity.android.makeupapp.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.udacity.android.makeupapp.api.model.Product;
 import com.udacity.android.makeupapp.database.AnotherThreadUsingRepository;
 import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.utils.ImageLoader;
+import com.udacity.android.makeupapp.widget.FavoritesWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
 
     private List<Product> products;
     private ProductsDB favoritesDB;
+    private Context context;
     private final FavoriteProductsAdapterOnClickHandler productClickHandler;
 
     public FavoriteProductsAdapter(FavoriteProductsAdapterOnClickHandler clickHandler) {
@@ -36,7 +39,8 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
     @NonNull
     @Override
     public FavoriteProductsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext())
+        context = viewGroup.getContext();
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.favorites_grid_item, viewGroup, false);
         return new FavoriteProductsViewHolder(view);
     }
@@ -64,6 +68,7 @@ public class FavoriteProductsAdapter extends RecyclerView.Adapter<FavoriteProduc
         products.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, products.size());
+        FavoritesWidgetProvider.updateAllWidgets(context);
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.udacity.android.makeupapp.api.model.Product;
 import com.udacity.android.makeupapp.database.AnotherThreadUsingRepository;
 import com.udacity.android.makeupapp.database.ProductsDB;
 import com.udacity.android.makeupapp.utils.ImageLoader;
+import com.udacity.android.makeupapp.widget.FavoritesWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
             addToFavoritesButton.setButtonDrawable(R.drawable.heart_checked);
             addToFavoritesButton.setContentDescription(context.getString(R.string.remove_from_favorite_button_cd));
         }
+        FavoritesWidgetProvider.updateAllWidgets(context);
     }
 
     class SearchResultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

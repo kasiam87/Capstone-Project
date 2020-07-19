@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 import static com.udacity.android.makeupapp.utils.StringFormatter.capitalize;
 
 public class FavoritesRemoteViewsService extends RemoteViewsService {
@@ -55,18 +57,19 @@ class FavoritesRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     public RemoteViews getViewAt(int position) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_item);
 
+        Product product = products.get(position);
         try {
-            Bitmap bitmap = Picasso.get().load(products.get(position).imageLink).get();
+            Bitmap bitmap = Picasso.get().load(product.imageLink).get();
             remoteViews.setImageViewBitmap(R.id.widget_product_image, bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (products.get(position).brand != null && !products.get(position).brand.isEmpty()) {
-            remoteViews.setTextViewText(R.id.widget_product_brand, capitalize(products.get(position).brand.trim()));
+        if (product.brand != null && !product.brand.isEmpty()) {
+            remoteViews.setTextViewText(R.id.widget_product_brand, capitalize(product.brand.trim()));
         }
-        if (products.get(position).name != null && !products.get(position).name.isEmpty()) {
-            remoteViews.setTextViewText(R.id.widget_product_name, capitalize(products.get(position).name.trim()));
+        if (product.name != null && !product.name.isEmpty()) {
+            remoteViews.setTextViewText(R.id.widget_product_name, capitalize(product.name.trim()));
         }
 
         Bundle extras = new Bundle();
@@ -95,6 +98,7 @@ class FavoritesRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     }
 
     public void onDataSetChanged() {
+        Timber.d(">>> onDataSetChanged");
         products = productDao.getFavoritesList();
     }
 }
